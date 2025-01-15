@@ -1,14 +1,7 @@
 {
   "terminal.integrated.fontFamily": "JetBrainsMono NF, Regular",
   "editor.fontSize": 14,
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  "editor.lineNumbers": "relative",
+  "window.confirmBeforeClose": "keyboardOnly",
 }
 
