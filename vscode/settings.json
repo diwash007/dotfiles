@@ -1,7 +1,0 @@
-{
-  "terminal.integrated.fontFamily": "JetBrainsMono NF, Regular",
-  "editor.fontSize": 14,
-  "editor.lineNumbers": "relative",
-  "window.confirmBeforeClose": "keyboardOnly",
-}
-
