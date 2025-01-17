@@ -1,4 +1,4 @@
-# Configs
+# Dotfiles 
 My personal configurations directory
 
 
