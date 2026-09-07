@@ -356,7 +356,10 @@ do
   vim.pack.add { gh 'NMAC427/guess-indent.nvim' }
   require('guess-indent').setup {}
 
-  vim.pack.add { gh 'NeogitOrg/neogit' }
+  -- Opens lazygit in a floating window directly inside Neovim
+  vim.pack.add { 
+    gh 'kdheepak/lazygit.nvim',
+  }
 
   -- Here is a more advanced configuration example that passes options to `gitsigns.nvim`
   --
@@ -373,7 +376,9 @@ do
     },
   }
   vim.pack.add { gh 'sindrets/diffview.nvim' }
-  vim.keymap.set('n', '<leader>gg', '<cmd>Neogit<CR>', { desc = 'Open Git status' })
+  
+  -- Keymap to trigger the Lazygit floating window
+  vim.keymap.set('n', '<leader>gg', '<cmd>LazyGit<CR>', { desc = 'Open LazyGit window' })
 
   -- Useful plugin to show you pending keybinds.
   vim.pack.add { gh 'folke/which-key.nvim' }
@@ -936,8 +941,9 @@ do
 
     -- Enable treesitter based folds
     -- For more info on folds see `:help folds`
-    -- vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-    -- vim.wo.foldmethod = 'expr'
+    vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+    vim.wo.foldmethod = 'expr'
+    vim.o.foldlevel = 99
 
     -- Check if treesitter indentation is available for this language, and if so enable it
     -- in case there is no indent query, the indentexpr will fallback to the vim's built in one
