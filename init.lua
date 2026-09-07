@@ -84,6 +84,10 @@ I hope you enjoy your Neovim journey,
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
+---@param repo string
+---@return string
+local function gh(repo) return 'https://github.com/' .. repo end
+
 -- ============================================================
 -- SECTION 1: OPTIONS
 -- Core Neovim settings, leaders, options
@@ -101,17 +105,56 @@ do
   vim.keymap.set('n', '<leader>gd', '<cmd>DiffviewOpen<CR>', { desc = '[G]it [D]iff' })
   vim.keymap.set('n', '<leader>gc', '<cmd>DiffviewClose<CR>', { desc = '[G]it [C]lose diff' })
 
-  vim.keymap.set('n', '<leader>e', function()
-  if vim.bo.filetype == 'netrw' then
-    vim.cmd('bd')
+-- ============================================================
+-- SECTION: FILE EXPLORER
+-- oil.nvim (edit fs as a buffer) + neo-tree.nvim (sidebar tree)
+-- ============================================================
+do
+  -- [[ oil.nvim ]]
+  -- Buffer-style explorer: `-` up a dir, edit lines to rename/create/delete, `:w` to apply
+  vim.pack.add { gh 'stevearc/oil.nvim' }
+  require('oil').setup {
+    -- default_file_explorer = false, -- don't hijack `nvim <dir>` / netrw; open it explicitly instead
+    view_options = { show_hidden = true },
+  }
+
+  -- [[ neo-tree.nvim ]]
+  -- Persistent sidebar tree with git status/diagnostics
+  vim.pack.add {
+    gh 'nvim-neo-tree/neo-tree.nvim',
+    gh 'MunifTanjim/nui.nvim',
+    gh 'nvim-lua/plenary.nvim',
+    -- gh 'nvim-tree/nvim-web-devicons', -- optional: nicer icons if you have a Nerd Font
+  }
+  require('neo-tree').setup {
+    filesystem = {
+      hijack_netrw_behavior = 'disabled',
+      filtered_items = {
+        visible = true,
+        hide_dotfiles = false,
+        hide_gitignored = false,
+      },
+      follow_current_file = { enabled = true },
+    },
+  }
+
+  -- [[ Keymaps: both available at once, on separate keys ]]
+  vim.keymap.set('n', '<leader>eo', function() require('oil').open() end, { desc = '[E]xplorer: [O]il (buffer)' })
+  vim.keymap.set('n', '<leader>en', '<cmd>Neotree toggle<CR>', { desc = '[E]xplorer: [N]eo-tree (sidebar)' })
+  vim.keymap.set('n', '-', function() require('oil').open() end, { desc = 'Open parent directory (oil)' })
+
+  local active_explorer = 'oil' -- flip to 'neo-tree' whenever you want to switch your default
+
+vim.keymap.set('n', '<leader>e', function()
+  if active_explorer == 'oil' then
+    require('oil').open()
   else
-    vim.cmd('Ex')
+    vim.cmd 'Neotree toggle'
   end
-end, { desc = 'Toggle file explorer' })
-
-
+end, { desc = 'Toggle file explorer (' .. active_explorer .. ')' })
+end
   -- Set to true if you have a Nerd Font installed and selected in the terminal
-  vim.g.have_nerd_font = false
+  vim.g.have_nerd_font = true
 
   -- [[ Setting options ]]
   --  See `:help vim.o`
@@ -328,12 +371,6 @@ do
     end,
   })
 end
-
----Because most plugins are hosted on GitHub, you can use the helper
----function to have less repetition in the following sections.
----@param repo string
----@return string
-local function gh(repo) return 'https://github.com/' .. repo end
 
 -- ============================================================
 -- SECTION 4: UI / CORE UX PLUGINS
@@ -552,16 +589,16 @@ do
       local buf = event.buf
 
       -- Find references for the word under your cursor.
-      vim.keymap.set('n', 'grr', builtin.lsp_references, { buffer = buf, desc = '[G]oto [R]eferences' })
+      vim.keymap.set('n', 'gr', builtin.lsp_references, { buffer = buf, desc = '[G]oto [R]eferences' })
 
       -- Jump to the implementation of the word under your cursor.
       -- Useful when your language has ways of declaring types without an actual implementation.
-      vim.keymap.set('n', 'gri', builtin.lsp_implementations, { buffer = buf, desc = '[G]oto [I]mplementation' })
+      vim.keymap.set('n', 'gi', builtin.lsp_implementations, { buffer = buf, desc = '[G]oto [I]mplementation' })
 
       -- Jump to the definition of the word under your cursor.
       -- This is where a variable was first declared, or where a function is defined, etc.
       -- To jump back, press <C-t>.
-      vim.keymap.set('n', 'grd', builtin.lsp_definitions, { buffer = buf, desc = '[G]oto [D]efinition' })
+      vim.keymap.set('n', 'gd', builtin.lsp_definitions, { buffer = buf, desc = '[G]oto [D]efinition' })
 
       -- Fuzzy find all the symbols in your current document.
       -- Symbols are things like variables, functions, types, etc.
@@ -574,7 +611,7 @@ do
       -- Jump to the type of the word under your cursor.
       -- Useful when you're not sure what type a variable is and you want to see
       -- the definition of its *type*, not where it was *defined*.
-      vim.keymap.set('n', 'grt', builtin.lsp_type_definitions, { buffer = buf, desc = '[G]oto [T]ype Definition' })
+      vim.keymap.set('n', 'gt', builtin.lsp_type_definitions, { buffer = buf, desc = '[G]oto [T]ype Definition' })
     end,
   })
 
@@ -873,7 +910,7 @@ do
       -- <c-k>: Toggle signature help
       --
       -- See `:help blink-cmp-config-keymap` for defining your own keymap
-      preset = 'default',
+      preset = 'enter',
 
       -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
       --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
