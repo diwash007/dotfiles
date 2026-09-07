@@ -722,9 +722,7 @@ do
     --    https://github.com/pmizio/typescript-tools.nvim
     --
     -- But for many setups, the LSP (`ts_ls`) will work just fine
-    -- ts_ls = {},
-
-    stylua = {}, -- Used to format Lua code
+    ts_ls = {},
 
     -- Special Lua Config, as recommended by neovim help docs
     lua_ls = {
@@ -783,7 +781,8 @@ do
   -- You can press `g?` for help in this menu.
   local ensure_installed = vim.tbl_keys(servers or {})
   vim.list_extend(ensure_installed, {
-    -- You can add other tools here that you want Mason to install
+    'stylua',
+    'prettierd',
   })
 
   require('mason-tool-installer').setup { ensure_installed = ensure_installed }
@@ -820,6 +819,7 @@ do
      lsp_format = 'fallback',
    },
    formatters_by_ft = {
+     lua = { 'stylua' },
      typescript = { 'prettierd', 'prettier', stop_after_first = true },
      typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
      javascript = { 'prettierd', 'prettier', stop_after_first = true },
