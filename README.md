@@ -11,6 +11,6 @@ brew install stow
 
 ## Run Stow command on the folder
 ```
-cd configs
+cd .config 
 stow .
 ```
