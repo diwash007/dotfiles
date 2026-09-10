@@ -7,4 +7,4 @@ bd - buffer delete
 ]d - to go through errors/warnings
 * - find word under cursor
 <leader>rn - rename global (f2 of vscode)
-
+`:g/console.log/d` - delete all lines consisting of a console.log

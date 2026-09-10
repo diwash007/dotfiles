@@ -19,54 +19,58 @@ do
   vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'Rename symbol and updates imports' })
   vim.keymap.set('n', '<leader>w', ':update<CR>', { silent = true })
 
--- ============================================================
--- SECTION: FILE EXPLORER
--- oil.nvim (edit fs as a buffer) + neo-tree.nvim (sidebar tree)
--- ============================================================
-do
-  -- [[ oil.nvim ]]
-  -- Buffer-style explorer: `-` up a dir, edit lines to rename/create/delete, `:w` to apply
-  vim.pack.add { gh 'stevearc/oil.nvim' }
-  require('oil').setup {
-    -- default_file_explorer = false, -- don't hijack `nvim <dir>` / netrw; open it explicitly instead
-    view_options = { show_hidden = true },
-  }
+  -- ============================================================
+  -- SECTION: FILE EXPLORER
+  -- oil.nvim (edit fs as a buffer) + neo-tree.nvim (sidebar tree)
+  -- ============================================================
+  do
+    -- [[ oil.nvim ]]
+    -- Buffer-style explorer: `-` up a dir, edit lines to rename/create/delete, `:w` to apply
+    vim.pack.add { gh 'stevearc/oil.nvim' }
+    require('oil').setup {
+      -- default_file_explorer = false, -- don't hijack `nvim <dir>` / netrw; open it explicitly instead
+      view_options = { show_hidden = true },
+    }
 
-  -- [[ neo-tree.nvim ]]
-  -- Persistent sidebar tree with git status/diagnostics
-  vim.pack.add {
-    gh 'nvim-neo-tree/neo-tree.nvim',
-    gh 'MunifTanjim/nui.nvim',
-    gh 'nvim-lua/plenary.nvim',
-    -- gh 'nvim-tree/nvim-web-devicons', -- optional: nicer icons if you have a Nerd Font
-  }
-  require('neo-tree').setup {
-    filesystem = {
-      hijack_netrw_behavior = 'disabled',
-      filtered_items = {
-        visible = true,
-        hide_dotfiles = false,
-        hide_gitignored = false,
+    -- [[ neo-tree.nvim ]]
+    -- Persistent sidebar tree with git status/diagnostics
+    vim.pack.add {
+      gh 'nvim-neo-tree/neo-tree.nvim',
+      gh 'MunifTanjim/nui.nvim',
+      gh 'nvim-lua/plenary.nvim',
+      -- gh 'nvim-tree/nvim-web-devicons', -- optional: nicer icons if you have a Nerd Font
+    }
+    require('neo-tree').setup {
+      filesystem = {
+        hijack_netrw_behavior = 'disabled',
+        filtered_items = {
+          visible = true,
+          hide_dotfiles = false,
+          hide_gitignored = false,
+        },
+        follow_current_file = { enabled = true },
       },
-      follow_current_file = { enabled = true },
-    },
-  }
+    }
 
-  -- [[ Keymaps: both available at once, on separate keys ]]
-  vim.keymap.set('n', '<leader>eo', function() require('oil').open() end, { desc = '[E]xplorer: [O]il (buffer)' })
-  vim.keymap.set('n', '<leader>en', '<cmd>Neotree toggle<CR>', { desc = '[E]xplorer: [N]eo-tree (sidebar)' })
-  vim.keymap.set('n', '-', function() require('oil').open() end, { desc = 'Open parent directory (oil)' })
+    -- [[ Keymaps: both available at once, on separate keys ]]
+    vim.keymap.set('n', '<leader>eo', function() require('oil').open() end, { desc = '[E]xplorer: [O]il (buffer)' })
+    vim.keymap.set('n', '<leader>en', '<cmd>Neotree toggle<CR>', { desc = '[E]xplorer: [N]eo-tree (sidebar)' })
+    vim.keymap.set('n', '-', function() require('oil').open() end, { desc = 'Open parent directory (oil)' })
 
-  local active_explorer = 'oil' -- flip to 'neo-tree' whenever you want to switch your default
+    local active_explorer = 'oil' -- flip to 'neo-tree' whenever you want to switch your default
 
-vim.keymap.set('n', '<leader>e', function()
-  if active_explorer == 'oil' then
-    require('oil').open()
-  else
-    vim.cmd 'Neotree toggle'
+    vim.keymap.set('n', '<leader>e', function()
+      if active_explorer == 'oil' then
+        require('oil').open()
+      else
+        vim.cmd 'Neotree toggle'
+      end
+    end, { desc = 'Toggle file explorer (' .. active_explorer .. ')' })
   end
-end, { desc = 'Toggle file explorer (' .. active_explorer .. ')' })
-end
+
+  -- vim.pack.add { gh 'MeanderingProgrammer/render-markdown.nvim'}
+  --
+  -- require('render-markdown').setup({})
   -- Set to true if you have a Nerd Font installed and selected in the terminal
   vim.g.have_nerd_font = true
 
@@ -121,6 +125,7 @@ end
   --   and `:help lua-guide-options`
   vim.o.list = true
   vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+  vim.opt.swapfile = false
 
   -- Preview substitutions live, as you type!
   vim.o.inccommand = 'split'
@@ -158,7 +163,7 @@ do
     underline = { severity = { min = vim.diagnostic.severity.WARN } },
 
     -- Can switch between these as you prefer
-    virtual_text = { wrap = true, }, -- Text shows up at the end of the line
+    virtual_text = { wrap = true }, -- Text shows up at the end of the line
     virtual_lines = false, -- Text shows up underneath the line, with virtual lines
 
     -- Auto open the float, so you can easily read the errors when jumping with `[d` and `]d`
@@ -309,8 +314,8 @@ do
     gh 'kdheepak/lazygit.nvim',
   }
 
-      -- Update color highlight
-      vim.lsp.document_color.enable(true, nil, { style = 'virtual' })
+  -- Update color highlight
+  vim.lsp.document_color.enable(true, nil, { style = 'virtual' })
 
   -- Here is a more advanced configuration example that passes options to `gitsigns.nvim`
   --
@@ -318,6 +323,12 @@ do
   -- Adds git related signs to the gutter, as well as utilities for managing changes
   vim.pack.add { gh 'lewis6991/gitsigns.nvim' }
   require('gitsigns').setup {
+    current_line_blame = true,
+    current_line_blame_opts = {
+      virt_text = true,
+      virt_text_pos = 'eol',
+      delay = 1000,
+    },
     signs = {
       add = { text = '+' }, ---@diagnostic disable-line: missing-fields
       change = { text = '~' }, ---@diagnostic disable-line: missing-fields
@@ -465,10 +476,12 @@ do
         additional_args = function()
           return {
             '--hidden',
-            '--glob', '!.git/*',
-            '--glob', '!node_modules/*',
+            '--glob',
+            '!.git/*',
+            '--glob',
+            '!node_modules/*',
           }
-          end,
+        end,
       },
     },
     extensions = {
@@ -754,7 +767,7 @@ do
   require('conform').setup {
     notify_on_error = false,
     default_format_opts = {
-     lsp_format = 'fallback',
+      lsp_format = 'fallback',
     },
     formatters_by_ft = {
       lua = { 'stylua' },
@@ -763,7 +776,7 @@ do
       javascript = { 'prettierd', 'prettier', stop_after_first = true },
       javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
     },
-    }
+  }
   vim.keymap.set({ 'n', 'v' }, '<leader>f', function() require('conform').format { async = true } end, { desc = '[F]ormat buffer' })
 end
 
