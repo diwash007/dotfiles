@@ -8,3 +8,6 @@ bd - buffer delete
 * - find word under cursor
 <leader>rn - rename global (f2 of vscode)
 `:g/console.log/d` - delete all lines consisting of a console.log
+<leader>oi - optimize imports
+<leader>sa - searrch all files including .env and hidden
+<Ctrl-l> - in insert mode to view completions
