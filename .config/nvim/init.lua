@@ -70,9 +70,15 @@ do
     end, { desc = 'Toggle file explorer (' .. active_explorer .. ')' })
   end
 
-  -- vim.pack.add { gh 'MeanderingProgrammer/render-markdown.nvim'}
-  --
-  -- require('render-markdown').setup({})
+  vim.pack.add { gh 'MeanderingProgrammer/render-markdown.nvim' }
+
+  require('render-markdown').setup {}
+  -- Toggle rendering globally
+  vim.keymap.set('n', '<leader>mt', '<cmd>RenderMarkdown toggle<CR>', { desc = 'Toggle Markdown Rendering' })
+
+  -- Alternatively, toggle for the current buffer only
+  vim.keymap.set('n', '<leader>md', '<cmd>RenderMarkdown buf_toggle<CR>', { desc = 'Toggle Markdown Buffer' })
+
   -- Set to true if you have a Nerd Font installed and selected in the terminal
   vim.g.have_nerd_font = true
 
