@@ -19,8 +19,24 @@ do
   vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'Rename symbol and updates imports' })
   vim.keymap.set('n', '<leader>w', ':update<CR>', { silent = true })
 
-  vim.keymap.set('n', '<leader>oi', ':OrganizeImports<CR>', { desc = 'Organize Imports' })
+  local function organize_imports()
+    local params = {
+      command = '_typescript.organizeImports',
+      arguments = {
+        vim.api.nvim_buf_get_name(0),
+        { mode = 'All' }, -- forces both sorting + removing unused imports
+      },
+    }
+    vim.lsp.buf.execute_command(params)
+  end
+  vim.keymap.set('n', '<leader>oi', organize_imports, { desc = 'Organize Imports' })
+
   vim.keymap.set('i', '<C-l>', function() require('blink.cmp').show() end, { desc = 'Trigger completion' })
+
+  -- Keep selection alive when tabbing visual blocks
+  vim.keymap.set('v', '>', '>gv', { desc = 'Indent and keep selection' })
+  vim.keymap.set('v', '<', '<gv', { desc = 'Un-indent and keep selection' })
+
   -- ============================================================
   -- SECTION: FILE EXPLORER
   -- oil.nvim (edit fs as a buffer) + neo-tree.nvim (sidebar tree)
@@ -72,7 +88,9 @@ do
 
   vim.pack.add { gh 'MeanderingProgrammer/render-markdown.nvim' }
 
-  require('render-markdown').setup {}
+  require('render-markdown').setup {
+    latex = { enabled = false },
+  }
   -- Toggle rendering globally
   vim.keymap.set('n', '<leader>mt', '<cmd>RenderMarkdown toggle<CR>', { desc = 'Toggle Markdown Rendering' })
 
@@ -321,6 +339,7 @@ do
   vim.pack.add {
     gh 'kdheepak/lazygit.nvim',
   }
+  vim.g.lazygit_config_dir = vim.fn.expand '~/.config/lazygit/'
 
   -- Update color highlight
   vim.lsp.document_color.enable(true, nil, { style = 'virtual' })
@@ -347,7 +366,7 @@ do
   }
   vim.pack.add { gh 'sindrets/diffview.nvim' }
   -- Keymap to trigger the Lazygit floating window
-  vim.keymap.set('n', '<leader>gg', '<cmd>LazyGit<CR>', { desc = 'Open LazyGit window' })
+  vim.keymap.set('n', '<leader>j', '<cmd>LazyGit<CR>', { desc = 'Open LazyGit window' })
 
   -- Useful plugin to show you pending keybinds.
   vim.pack.add { gh 'folke/which-key.nvim' }

@@ -23,7 +23,7 @@ Leader key: `<Space>`
 
 | Keymap | Action |
 |---|---|
-| `<leader>gg` | Open **LazyGit** floating window |
+| `<leader>j` | Open **LazyGit** floating window |
 | `<leader>gd` | `DiffviewOpen` — open Git diff view |
 | `<leader>gc` | `DiffviewClose` — close Git diff view |
 
