@@ -224,10 +224,20 @@ do
   --  Use CTRL+<hjkl> to switch between windows
   --
   --  See `:help wincmd` for a list of all window commands
-  vim.keymap.set('n', '<M-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-  vim.keymap.set('n', '<M-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-  vim.keymap.set('n', '<M-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-  vim.keymap.set('n', '<M-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+  -- vim.keymap.set('n', '<M-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+  -- vim.keymap.set('n', '<M-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+  -- vim.keymap.set('n', '<M-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+  -- vim.keymap.set('n', '<M-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+  vim.pack.add { gh 'alexghergh/nvim-tmux-navigation' }
+  require('nvim-tmux-navigation').setup {
+    disable_when_zoomed = true,
+  }
+
+  vim.keymap.set('n', '<M-h>', '<cmd>NvimTmuxNavigateLeft<cr>')
+  vim.keymap.set('n', '<M-j>', '<cmd>NvimTmuxNavigateDown<cr>')
+  vim.keymap.set('n', '<M-k>', '<cmd>NvimTmuxNavigateUp<cr>')
+  vim.keymap.set('n', '<M-l>', '<cmd>NvimTmuxNavigateRight<cr>')
 
   -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
   -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
