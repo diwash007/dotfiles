@@ -37,6 +37,8 @@ do
   vim.keymap.set('v', '>', '>gv', { desc = 'Indent and keep selection' })
   vim.keymap.set('v', '<', '<gv', { desc = 'Un-indent and keep selection' })
 
+  vim.keymap.set('n', '<Leader>rc', ':source $MYVIMRC | echo "Config reloaded!"<CR>', { silent = false, desc = 'Reload config' })
+
   -- ============================================================
   -- SECTION: FILE EXPLORER
   -- oil.nvim (edit fs as a buffer) + neo-tree.nvim (sidebar tree)
