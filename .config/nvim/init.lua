@@ -50,6 +50,13 @@ do
       view_options = { show_hidden = true },
     }
 
+    -- Reveal current file in Finder (macOS only)
+    vim.keymap.set('n', '<leader>of', function()
+      local current_file = vim.fn.expand '%:p'
+      if current_file == '' then current_file = vim.fn.getcwd() end
+      vim.fn.jobstart({ 'open', '-R', current_file }, { detach = true })
+    end, { desc = '[O]pen in [F]inder (reveal file)' })
+
     -- [[ neo-tree.nvim ]]
     -- Persistent sidebar tree with git status/diagnostics
     vim.pack.add {
