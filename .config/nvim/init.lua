@@ -39,6 +39,19 @@ do
 
   vim.keymap.set('n', '<Leader>rc', ':source $MYVIMRC | echo "Config reloaded!"<CR>', { silent = false, desc = 'Reload config' })
 
+  -- Clears all data and macro registers
+  local function clear_all_registers()
+    -- Define all characters used for writable registers
+    local regs = 'abcdefghijklmnopqrstuvwxyz0123456789"-_'
+    for c in regs:gmatch '.' do
+      vim.fn.setreg(c, '')
+    end
+    print 'All registers cleared!'
+  end
+
+  -- Binds the function to <leader>cr (Clear Registers)
+  vim.keymap.set('n', '<leader>cr', clear_all_registers, { desc = 'Clear all registers' })
+
   -- ============================================================
   -- SECTION: FILE EXPLORER
   -- oil.nvim (edit fs as a buffer) + neo-tree.nvim (sidebar tree)
