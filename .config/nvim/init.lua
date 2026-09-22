@@ -150,6 +150,11 @@ do
   vim.o.splitright = true
   vim.o.splitbelow = true
 
+  vim.opt.expandtab = true -- Convert tabs to spaces
+  vim.opt.tabstop = 4 -- Insert 4 spaces for a tab
+  vim.opt.shiftwidth = 2 -- Change the number of spaces inserted for indentation
+  vim.opt.softtabstop = 4 -- Makes the spaces feel like real tabs when editing
+
   -- Sets how neovim will display certain whitespace characters in the editor.
   --  See `:help 'list'`
   --  and `:help 'listchars'`

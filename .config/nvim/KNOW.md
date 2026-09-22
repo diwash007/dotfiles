@@ -11,3 +11,4 @@ bd - buffer delete
 <leader>oi - optimize imports
 <leader>sa - searrch all files including .env and hidden
 <Ctrl-l> - in insert mode to view completions
+<Ctrl-q> - save telescope search below
