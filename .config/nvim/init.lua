@@ -592,6 +592,18 @@ do
 
       vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, { buffer = buf, desc = 'LSP Code Action' })
 
+      vim.keymap.set(
+        'n',
+        '<leader>ci',
+        function()
+          vim.lsp.buf.code_action {
+            context = { only = { 'source.addMissingImports.ts' } },
+            apply = true,
+          }
+        end,
+        { desc = 'Add all missing imports' }
+      )
+
       -- Find references for the word under your cursor.
       vim.keymap.set('n', 'gr', builtin.lsp_references, { buffer = buf, desc = '[G]oto [R]eferences' })
 
