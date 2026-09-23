@@ -863,6 +863,12 @@ do
     },
   }
   vim.keymap.set({ 'n', 'v' }, '<leader>f', function() require('conform').format { async = true } end, { desc = '[F]ormat buffer' })
+
+  -- [[ Auto-pairs ]]
+  -- Automatically closes ( [ { and expands them onto a new indented
+  -- line + closing bracket when you press <CR> between an empty pair
+  vim.pack.add { gh 'windwp/nvim-autopairs' }
+  require('nvim-autopairs').setup {}
 end
 
 -- ============================================================
@@ -964,7 +970,7 @@ do
   vim.pack.add { { src = gh 'nvim-treesitter/nvim-treesitter', version = 'main' } }
 
   -- Ensure basic parsers are installed
-  local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
+  local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'typescript', 'tsx', 'javascript' }
   require('nvim-treesitter').install(parsers)
 
   ---@param buf integer
