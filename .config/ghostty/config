@@ -1,24 +1,25 @@
 # vi:nospell:ft=conf:
-font-family = IosevkaTerm Nerd Font Mono
-theme = Catppuccin Mocha
+
+# Appearance
+theme = TokyoNight Night
 
 font-size = 14
+font-style = Medium
+font-thicken = true
+font-family = IosevkaTerm Nerd Font Mono
 
-# background-opacity = 0.97
-# background-blur-radius = 20
-# initial-command = /opt/homebrew/bin/tmux new -As default
+adjust-cell-height = 2
 
-keybind = cmd+left=csi:H
-keybind = cmd+right=csi:F
-# keybind = opt+left=unbind
-# keybind = opt+right=unbind
-keybind = cmd+backspace=text:\x15
-keybind = opt+backspace=text:\x17
+# Behavior
+macos-option-as-alt = left
 confirm-close-surface = false
 quit-after-last-window-closed = true
-adjust-underline-position = 2
 
-macos-option-as-alt = true
+# Keybinds
+keybind = cmd+left=csi:H
+keybind = cmd+right=csi:F
+keybind = cmd+backspace=text:\x15
+keybind = opt+backspace=text:\x17
+# keybind = alt+left=unbind
+# keybind = alt+right=unbind
 
-keybind = alt+left=unbind
-keybind = alt+right=unbind
