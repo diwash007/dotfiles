@@ -12,3 +12,4 @@ bd - buffer delete
 <leader>sa - searrch all files including .env and hidden
 <Ctrl-l> - in insert mode to view completions
 <Ctrl-q> - save telescope search below
+sr<a><b> - replaces surrounding a with b (useful for replacing surrounding brackets & quotes)

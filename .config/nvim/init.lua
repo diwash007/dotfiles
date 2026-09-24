@@ -377,6 +377,7 @@ do
     gh 'kdheepak/lazygit.nvim',
   }
   vim.g.lazygit_config_dir = vim.fn.expand '~/.config/lazygit/'
+  vim.g.lazygit_floating_window_scaling_factor = 0.95
 
   -- Update color highlight
   vim.lsp.document_color.enable(true, nil, { style = 'virtual' })

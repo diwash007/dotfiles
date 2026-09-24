@@ -1,0 +1,45 @@
+gui:
+  border: 'rounded'
+  # Show commit graph in log view
+  showFileTree: true
+  showListFooter: true
+  showRandomTip: false
+  showBottomLine: true
+  showCommandLog: false
+  # Panel width proportions
+  mainPanelSplitMode: 'flexible'
+  # Color theme palette (Catppuccin/Nord-inspired neutral highlights)
+  theme:
+    activeBorderColor:
+      - '#89b4fa'
+      - 'bold'
+    inactiveBorderColor:
+      - '#585b70'
+    optionsTextColor:
+      - '#89b4fa'
+    selectedLineBgColor:
+      - '#333'
+    cherryPickedCommitBgColor:
+      - '#45475a'
+    cherryPickedCommitFgColor:
+      - '#89b4fa'
+    markedBaseCommitBgColor:
+      - '#313244'
+    markedBaseCommitFgColor:
+      - '#f9e2af'
+    unstagedChangesColor:
+      - '#f38ba8'
+    defaultFgColor:
+      - '#cdd6f4'
+git:
+  # Show commit author & date in commit history panel
+  log:
+    showGraph: 'always'
+    showWholeGraph: false
+  parseEmoji: true
+os:
+  # Open files directly in your running Neovim instance when hitting 'e'
+  editPreset: 'nvim'
+# Confirmations setup for faster workflow
+promptToReturnFromSubprocess: false
+confirmOnQuit: false
