@@ -1,4 +1,6 @@
 # export JAVA_HOME=/Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home
+export XDG_CONFIG_HOME="$HOME/.config"
+export PATH="$HOME/.local/bin:$PATH"
 export JAVA_HOME=$(/usr/libexec/java_home -v 21)
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:/Applications/Visual Studio Code.app/Contents/Resources/app/bin:/opt/homebrew/bin:$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/Library/Android/sdk/build-tools/33.0.0:$PATH"
@@ -278,3 +280,7 @@ export VISUAL="$EDITOR"
 
 # opencode
 export PATH=$HOME/.opencode/bin:$PATH
+
+
+# Added by Antigravity CLI installer
+export PATH="/Users/diwash/.local/bin:$PATH"
